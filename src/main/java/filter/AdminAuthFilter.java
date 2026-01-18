@@ -1,5 +1,6 @@
 package filter;
 
+import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -11,18 +12,18 @@ import model.User;
 import model.UserRole;
 
 import java.io.IOException;
-//
-//@WebFilter(urlPatterns = {"/changecar", "/deletecar", "changerental", "/deleterental"})
-//public class AdminAuthFilter {
-//
-//    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-//        if (servletRequest instanceof HttpServletRequest request) {
-//            User user = (User) request.getSession().getAttribute("user");
-//            if (user != null && user.getRole() == UserRole.ADMIN) {
-//                filterChain.doFilter(servletRequest, servletResponse);
-//            } else {
-//                ((HttpServletResponse) servletResponse).sendRedirect("/home");
-//            }
-//        }
-//    }
-//}
+
+@WebFilter(urlPatterns = {"/changecar", "/deletecar", "/changerental", "/deleterental"})
+public class AdminAuthFilter implements Filter {
+
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        if (servletRequest instanceof HttpServletRequest request) {
+            User user = (User) request.getSession().getAttribute("user");
+            if (user != null && user.getRole() == UserRole.ADMIN) {
+                filterChain.doFilter(servletRequest, servletResponse);
+            } else {
+                ((HttpServletResponse) servletResponse).sendRedirect("/home");
+            }
+        }
+    }
+}
