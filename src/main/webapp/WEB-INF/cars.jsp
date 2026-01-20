@@ -21,6 +21,7 @@
 <table>
     <tr>
         <th>Id</th>
+        <th>Picture</th>
         <th>Brand</th>
         <th>Model</th>
         <th>Year</th>
@@ -30,6 +31,13 @@
     <% for (Car car : cars) { %>
     <tr>
         <td><%= car.getId() %>
+        </td>
+        <td>
+        <%if (car.getPictureName() == null || car.getPictureName().isEmpty()) {%>
+        <img width="50" src="/img/img.png">
+        <% } else { %>
+        <img width="50" src="/getImage?picture_name=<%=car.getPictureName()%>">
+            <%}%>
         </td>
         <td><%= car.getBrand() %>
         </td>

@@ -17,13 +17,14 @@ public class CarService {
     private Connection connection = DB.getInstance().getConnection();
 
     public void addCar(Car car) {
-        String sql = "INSERT INTO Car (brand, model, year, dailyRate, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Car (brand, model, year, dailyRate, status, picture_name) VALUES (?, ?, ?, ?, ?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, car.getBrand());
             preparedStatement.setString(2, car.getModel());
             preparedStatement.setString(3, car.getYear());
             preparedStatement.setString(4, String.valueOf(car.getDailyRate()));
             preparedStatement.setString(5, car.getStatus().name());
+            preparedStatement.setString(6,car.getPictureName());
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -76,6 +77,7 @@ public class CarService {
                 car.setDailyRate(resultSet.getDouble("dailyRate"));
                 String status = resultSet.getString("status");
                 car.setStatus(CarStatus.valueOf(status));
+                car.setPictureName(resultSet.getString("picture_name"));
                 return car;
             }
 
@@ -98,6 +100,7 @@ public class CarService {
                 car.setYear(resultSet.getString("year"));
                 car.setDailyRate(resultSet.getDouble("dailyRate"));
                 car.setStatus(CarStatus.valueOf(resultSet.getString("status")));
+                car.setPictureName(resultSet.getString("picture_name"));
                 cars.add(car);
 
             }

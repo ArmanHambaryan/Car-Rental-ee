@@ -7,7 +7,7 @@
 <a href="/">Home </a>
 <a href="/cars">Cars</a>
 
-<form action="addcar" method="post">
+<form action="addcar" method="post" enctype="multipart/form-data">
     Brand : <input type="text" name="brand"><br>
     Model : <input type="text" name="model"><br>
     Year : <input type="text" name="year"><br>
@@ -17,6 +17,7 @@
     <option value="rented">RENTED</option>
     <option value="maintenance">MAINTENANCE</option>
 </select><br>
+    <input type="file" name="pic"><br>
     <input type="submit" value="Add car">
 
 
